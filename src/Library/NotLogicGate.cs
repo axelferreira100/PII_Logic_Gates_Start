@@ -3,8 +3,7 @@ namespace Library;
 public class NotLogicGate
 {
     private string name;
-    private int input;
-    private int resultValue;
+    private int input, resultValue;
         
     public string Name
     {
