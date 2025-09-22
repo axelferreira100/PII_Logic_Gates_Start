@@ -35,7 +35,7 @@ public class AndLogicGate : ILogicGate
 
     public int EvaluateExpression()
     {
-        foreach (ILogicGate logicalExpression in Inputs)
+        foreach (ILogicGate logicalExpression in this.Inputs)
         {
             if (logicalExpression.EvaluateExpression() == 0)
             {

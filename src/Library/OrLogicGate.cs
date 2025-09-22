@@ -1,10 +1,9 @@
 namespace Library;
 
-public class OrLogicGate
+public class OrLogicGate : ILogicGate
 {
     private string name;
-    private List<int> inputs;
-    private int resultValue;
+    private List<ILogicGate> inputs;
         
     public string Name
     {
@@ -12,23 +11,16 @@ public class OrLogicGate
         private set { this.name = value; }
     }
 
-    public List<int> Inputs
+    public List<ILogicGate> Inputs
     {
         get { return this.inputs; }
         set { this.inputs = value; }
-    }
-
-    public int ResultValue
-    {
-        get { return this.resultValue; }
-        private set { this.resultValue = value; }
     }
 
     public OrLogicGate(string name)
     {
         this.Name = name;
         this.Inputs = new List<int>();
-        this.ResultValue = 0;
     }
     
     public void AddInput(int input)
@@ -36,15 +28,21 @@ public class OrLogicGate
         this.Inputs.Add(input);
     }
 
-    public void EvaluateExpression()
+    public void RemoveInput(int input)
     {
-        if (this.Inputs.Contains(1))
+        this.Inputs.Remove(input);
+    }
+
+    public int EvaluateExpression()
+    {
+        foreach (ILogicGate logicalExpression in this.Inputs)
         {
-            this.ResultValue = 1;
+            if (logicalExpression.EvaluateExpression() == 1)
+            {
+                return 1;
+            }
         }
-        else
-        {
-            this.ResultValue = 0;
-        }
+
+        return 0;
     }
 }
