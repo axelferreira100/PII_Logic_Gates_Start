@@ -1,6 +1,6 @@
-﻿namespace Library;
+namespace Library;
 
-public class AndLogicGate
+public class OrLogicGate
 {
     private string name;
     private List<int> inputs;
@@ -24,13 +24,13 @@ public class AndLogicGate
         private set { this.resultValue = value; }
     }
 
-    public AndLogicGate(string name)
+    public OrLogicGate(string name)
     {
         this.Name = name;
         this.Inputs = new List<int>();
         this.ResultValue = 0;
     }
-
+    
     public void AddInput(int input)
     {
         this.Inputs.Add(input);
@@ -38,13 +38,13 @@ public class AndLogicGate
 
     public void EvaluateExpression()
     {
-        if (this.Inputs.Contains(0))
+        if (this.Inputs.Contains(1))
         {
-            this.ResultValue = 0;
+            this.ResultValue = 1;
         }
         else
         {
-            this.ResultValue = 1;
+            this.ResultValue = 0;
         }
     }
 }
