@@ -1,9 +1,9 @@
 namespace Library;
 
-public class NotLogicGate
+public class NotLogicGate : ILogicGate
 {
     private string name;
-    private int input, resultValue;
+    private ILogicGate input;
         
     public string Name
     {
@@ -11,27 +11,24 @@ public class NotLogicGate
         private set { this.name = value; }
     }
 
-    public int Input
+    public ILogicGate Input
     {
         get { return this.input; }
         set { this.input = value; }
     }
 
-    public int ResultValue
+    public NotLogicGate(string name)
     {
-        get { return this.resultValue; }
-        private set { this.resultValue = value; }
+        this.Name = name;
     }
 
-    public void EvaluateExpression()
+    public int EvaluateExpression()
     {
-        if (this.Input == 0)
+        if (this.input.EvaluateExpression() == 0)
         {
-            this.ResultValue = 1;
+            return 1;
         }
-        else
-        {
-            this.ResultValue = 0;
-        }
+
+        return 0;
     }
 }

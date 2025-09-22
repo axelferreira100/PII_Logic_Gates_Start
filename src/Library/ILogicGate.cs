@@ -2,5 +2,8 @@ namespace Library;
 
 public interface ILogicGate
 {
-    public void EvaluateExpression() { }
+    public int EvaluateExpression()
+    {
+        return 0;
+    }
 }

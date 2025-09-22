@@ -20,15 +20,15 @@ public class OrLogicGate : ILogicGate
     public OrLogicGate(string name)
     {
         this.Name = name;
-        this.Inputs = new List<int>();
+        this.Inputs = new List<ILogicGate>();
     }
     
-    public void AddInput(int input)
+    public void AddInput(ILogicGate input)
     {
         this.Inputs.Add(input);
     }
 
-    public void RemoveInput(int input)
+    public void RemoveInput(ILogicGate input)
     {
         this.Inputs.Remove(input);
     }
