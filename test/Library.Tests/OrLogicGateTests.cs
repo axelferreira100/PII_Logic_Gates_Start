@@ -1,10 +1,15 @@
+using Library;
+
 namespace Library.Tests;
 
-public class Tests
+public class OrLogicGateTests
 {
+    private AndLogicGate _andLogicGate;
+    
     [SetUp]
     public void Setup()
     {
+        _andLogicGate = new AndLogicGate("AND-1");
     }
 
     [Test]
