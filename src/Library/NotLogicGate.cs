@@ -11,7 +11,7 @@ public class NotLogicGate
         private set { this.name = value; }
     }
 
-    public int Inputs
+    public int Input
     {
         get { return this.input; }
         set { this.input = value; }
@@ -21,5 +21,17 @@ public class NotLogicGate
     {
         get { return this.resultValue; }
         private set { this.resultValue = value; }
+    }
+
+    public void EvaluateExpression()
+    {
+        if (this.Input == 0)
+        {
+            this.ResultValue = 1;
+        }
+        else
+        {
+            this.ResultValue = 0;
+        }
     }
 }
