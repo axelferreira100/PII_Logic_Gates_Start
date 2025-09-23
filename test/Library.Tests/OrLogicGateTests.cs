@@ -44,4 +44,37 @@ public class OrLogicGateTests
         Assert.AreEqual(expectedListElementsCount, actualListElementsCount);
         Assert.Contains(falseLogicGate, actualInputs);
     }
+
+    [Test]
+    public void RemoveInput_ValidInput_RemovedInputOfTheListOfInputsCorrectly()
+    {
+        int expectedListElementsCount = 0;
+        TrueLogicGate trueLogicGate = new TrueLogicGate();
+        _orLogicGate.AddInput(trueLogicGate);
+
+        _orLogicGate.RemoveInput(trueLogicGate);
+
+        List<ILogicGate> actualListOfInputs = _orLogicGate.Inputs;
+        int actualListElementsCount = actualListOfInputs.Count;
+
+        Assert.IsEmpty(actualListOfInputs);
+        Assert.AreEqual(expectedListElementsCount, actualListElementsCount);
+    }
+
+    [Test]
+    [TestCase(0, 0, 0)]
+    [TestCase(0, 1, 1)]
+    [TestCase(1, 0, 1)]
+    [TestCase(1, 1, 1)]
+    public void EvaluateExpression_ValidCasesOrTruthTable_ReturnsExpectedValues(int input1, int input2, int expectedResult)
+    {
+        ILogicGate newInput1 = input1 == 0 ? new FalseLogicGate() : new TrueLogicGate();
+        ILogicGate newInput2 = input2 == 0 ? new FalseLogicGate() : new TrueLogicGate();
+        _orLogicGate.AddInput(newInput1);
+        _orLogicGate.AddInput(newInput2);
+
+        int obtainedResult = _orLogicGate.EvaluateExpression();
+        
+        Assert.AreEqual(obtainedResult, expectedResult);
+    }
 }
