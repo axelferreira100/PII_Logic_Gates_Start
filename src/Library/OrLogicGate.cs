@@ -14,7 +14,7 @@ public class OrLogicGate : ILogicGate
     public List<ILogicGate> Inputs
     {
         get { return this.inputs; }
-        set { this.inputs = value; }
+        private set { this.inputs = value; }
     }
 
     public OrLogicGate(string name)
