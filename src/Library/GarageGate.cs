@@ -25,19 +25,31 @@ public class GarageGate : ILogicGate
 
     public int EvaluateExpression()
     {
-        if (this.Inputs[2].EvaluateExpression() == 1)
-        {
-            if (!this.Inputs.Contains<>(0))
-            {
-                return 1;
-            }
+        ILogicGate inputA = Inputs[0], inputB = Inputs[1], inputC = Inputs[2];
+        
+        NotLogicGate negativeInputA = new NotLogicGate("NOT-A");
+        NotLogicGate negativeInputB = new NotLogicGate("NOT-B");
+        
+        AndLogicGate positivesABAndLogicGate = new AndLogicGate("AND-1");
+        AndLogicGate negativesABAndLogicGate = new AndLogicGate("AND-2");
+        AndLogicGate finalAndLogicGate = new AndLogicGate("AND-3");
+        
+        OrLogicGate orLogicGate = new OrLogicGate("OR-1");
 
-            if (this.Inputs[0].EvaluateExpression() == 0 && this.Inputs[1].EvaluateExpression() == 0)
-            {
-                return 1;
-            }
-        }
+        negativeInputA.Input = inputA;
+        negativeInputB.Input = inputB;
+        
+        positivesABAndLogicGate.AddInput(inputA);
+        positivesABAndLogicGate.AddInput(inputB);
+        negativesABAndLogicGate.AddInput(negativeInputA);
+        negativesABAndLogicGate.AddInput(negativeInputB);
+        
+        orLogicGate.AddInput(positivesABAndLogicGate);
+        orLogicGate.AddInput(negativesABAndLogicGate);
+        
+        finalAndLogicGate.AddInput(orLogicGate);
+        finalAndLogicGate.AddInput(inputC);
 
-        return 0;
+        return finalAndLogicGate.EvaluateExpression();
     }
 }
