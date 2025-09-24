@@ -3,30 +3,30 @@ using Library;
 namespace Library.Tests;
 
 [TestFixture]
-public class OrLogicGateTests
+public class AndLogicGateTests
 {
-    private OrLogicGate _orLogicGate;
+    private AndLogicGate _andLogicGate;
     private TrueLogicGate _trueLogicGate;
     private FalseLogicGate _falseLogicGate;
 
     [SetUp]
     public void SetUp()
     {
-        _orLogicGate = new OrLogicGate("OR-1");
+        _andLogicGate = new AndLogicGate("AND-1");
         _trueLogicGate = new TrueLogicGate();
         _falseLogicGate = new FalseLogicGate();
     }
 
     [Test]
-    public void ConstructorOrLogicGate_ValidParameters_CreatedClassSuccessfully()
+    public void ConstructorAndLogicGate_ValidParameters_CreatedClassSuccessfully()
     {
-        string expectedName = "OR-2";
+        string expectedName = "AND-2";
         int expectedInputsElementsCount = 0;
 
-        OrLogicGate orLogicGate = new OrLogicGate("OR-2");
+        AndLogicGate andLogicGate = new AndLogicGate("AND-2");
 
-        string actualName = orLogicGate.Name;
-        List<ILogicGate> actualListOfInputs = orLogicGate.Inputs;
+        string actualName = andLogicGate.Name;
+        List<ILogicGate> actualListOfInputs = andLogicGate.Inputs;
         int actualInputsElementsCount = actualListOfInputs.Count;
 
         Assert.AreEqual(expectedName, actualName);
@@ -39,9 +39,9 @@ public class OrLogicGateTests
     {
         int expectedListElementsCount = 1;
 
-        _orLogicGate.AddInput(_falseLogicGate);
+        _andLogicGate.AddInput(_falseLogicGate);
 
-        List<ILogicGate> actualInputs = _orLogicGate.Inputs;
+        List<ILogicGate> actualInputs = _andLogicGate.Inputs;
         int actualListElementsCount = actualInputs.Count;
 
         Assert.IsNotEmpty(actualInputs);
@@ -53,11 +53,11 @@ public class OrLogicGateTests
     public void RemoveInput_ValidInput_RemovedInputOfTheListOfInputsCorrectly()
     {
         int expectedListElementsCount = 0;
-        _orLogicGate.AddInput(_trueLogicGate);
+        _andLogicGate.AddInput(_trueLogicGate);
 
-        _orLogicGate.RemoveInput(_trueLogicGate);
+        _andLogicGate.RemoveInput(_trueLogicGate);
 
-        List<ILogicGate> actualListOfInputs = _orLogicGate.Inputs;
+        List<ILogicGate> actualListOfInputs = _andLogicGate.Inputs;
         int actualListElementsCount = actualListOfInputs.Count;
 
         Assert.IsEmpty(actualListOfInputs);
@@ -67,17 +67,17 @@ public class OrLogicGateTests
     [Test]
     public void RemoveInput_InputNotInList_DoesNothing()
     {
-        _orLogicGate.RemoveInput(_trueLogicGate);
+        _andLogicGate.RemoveInput(_trueLogicGate);
         
-        Assert.IsEmpty(_orLogicGate.Inputs);
+        Assert.IsEmpty(_andLogicGate.Inputs);
     }
 
     [Test]
     [TestCase(0, 0, 0)]
-    [TestCase(0, 1, 1)]
-    [TestCase(1, 0, 1)]
+    [TestCase(0, 1, 0)]
+    [TestCase(1, 0, 0)]
     [TestCase(1, 1, 1)]
-    public void EvaluateExpression_ValidCasesOrTruthTableWithTwoInputs_ReturnsExpectedValues(
+    public void EvaluateExpression_ValidCasesAndTruthTableWithTwoInputs_ReturnsExpectedValues(
         int input1,
         int input2,
         int expectedResult
@@ -85,25 +85,25 @@ public class OrLogicGateTests
     {
         ILogicGate newInput1 = input1 == 0 ? _falseLogicGate : _trueLogicGate;
         ILogicGate newInput2 = input2 == 0 ? _falseLogicGate : _trueLogicGate;
-        _orLogicGate.AddInput(newInput1);
-        _orLogicGate.AddInput(newInput2);
+        _andLogicGate.AddInput(newInput1);
+        _andLogicGate.AddInput(newInput2);
 
-        int obtainedResult = _orLogicGate.EvaluateExpression();
+        int obtainedResult = _andLogicGate.EvaluateExpression();
 
         Assert.AreEqual(expectedResult, obtainedResult);
     }
 
     [Test]
     [TestCase(0, 0, 0, 0)]
-    [TestCase(0, 0, 1, 1)]
-    [TestCase(0, 1, 0, 1)]
-    [TestCase(0, 1, 1, 1)]
-    [TestCase(1, 0, 0, 1)]
-    [TestCase(1, 0, 1, 1)]
-    [TestCase(1, 1, 0, 1)]
+    [TestCase(0, 0, 1, 0)]
+    [TestCase(0, 1, 0, 0)]
+    [TestCase(0, 1, 1, 0)]
+    [TestCase(1, 0, 0, 0)]
+    [TestCase(1, 0, 1, 0)]
+    [TestCase(1, 1, 0, 0)]
     [TestCase(1, 1, 1, 1)]
     
-    public void EvaluateExpression_ValidCasesOrTruthTableWithThreeInputs_ReturnsExpectedValues(
+    public void EvaluateExpression_ValidCasesAndTruthTableWithThreeInputs_ReturnsExpectedValues(
         int input1,
         int input2,
         int input3,
@@ -113,11 +113,11 @@ public class OrLogicGateTests
         ILogicGate newInput1 = input1 == 0 ? _falseLogicGate : _trueLogicGate;
         ILogicGate newInput2 = input2 == 0 ? _falseLogicGate : _trueLogicGate;
         ILogicGate newInput3 = input3 == 0 ? _falseLogicGate : _trueLogicGate;
-        _orLogicGate.AddInput(newInput1);
-        _orLogicGate.AddInput(newInput2);
-        _orLogicGate.AddInput(newInput3);
+        _andLogicGate.AddInput(newInput1);
+        _andLogicGate.AddInput(newInput2);
+        _andLogicGate.AddInput(newInput3);
 
-        int obtainedResult = _orLogicGate.EvaluateExpression();
+        int obtainedResult = _andLogicGate.EvaluateExpression();
         
         Assert.AreEqual(expectedResult, obtainedResult);
     }
