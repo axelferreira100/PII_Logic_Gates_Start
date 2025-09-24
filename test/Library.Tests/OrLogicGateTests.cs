@@ -2,14 +2,19 @@ using Library;
 
 namespace Library.Tests;
 
+[TestFixture]
 public class OrLogicGateTests
 {
     private OrLogicGate _orLogicGate;
+    private TrueLogicGate _trueLogicGate;
+    private FalseLogicGate _falseLogicGate;
 
     [SetUp]
-    public void Setup()
+    public void SetUp()
     {
         _orLogicGate = new OrLogicGate("OR-1");
+        _trueLogicGate = new TrueLogicGate();
+        _falseLogicGate = new FalseLogicGate();
     }
 
     [Test]
@@ -33,26 +38,24 @@ public class OrLogicGateTests
     public void AddInput_ValidInput_AddedInputToTheListOfInputsCorrectly()
     {
         int expectedListElementsCount = 1;
-        FalseLogicGate falseLogicGate = new FalseLogicGate();
 
-        _orLogicGate.AddInput(falseLogicGate);
+        _orLogicGate.AddInput(_falseLogicGate);
 
         List<ILogicGate> actualInputs = _orLogicGate.Inputs;
         int actualListElementsCount = actualInputs.Count;
 
         Assert.IsNotEmpty(actualInputs);
         Assert.AreEqual(expectedListElementsCount, actualListElementsCount);
-        Assert.Contains(falseLogicGate, actualInputs);
+        Assert.Contains(_falseLogicGate, actualInputs);
     }
 
     [Test]
     public void RemoveInput_ValidInput_RemovedInputOfTheListOfInputsCorrectly()
     {
         int expectedListElementsCount = 0;
-        TrueLogicGate trueLogicGate = new TrueLogicGate();
-        _orLogicGate.AddInput(trueLogicGate);
+        _orLogicGate.AddInput(_trueLogicGate);
 
-        _orLogicGate.RemoveInput(trueLogicGate);
+        _orLogicGate.RemoveInput(_trueLogicGate);
 
         List<ILogicGate> actualListOfInputs = _orLogicGate.Inputs;
         int actualListElementsCount = actualListOfInputs.Count;
@@ -64,9 +67,7 @@ public class OrLogicGateTests
     [Test]
     public void RemoveInput_InputNotInList_DoesNothing()
     {
-        TrueLogicGate trueLogicGate = new TrueLogicGate();
-
-        _orLogicGate.RemoveInput(trueLogicGate);
+        _orLogicGate.RemoveInput(_trueLogicGate);
         
         Assert.IsEmpty(_orLogicGate.Inputs);
     }
@@ -82,8 +83,8 @@ public class OrLogicGateTests
         int expectedResult
     )
     {
-        ILogicGate newInput1 = input1 == 0 ? new FalseLogicGate() : new TrueLogicGate();
-        ILogicGate newInput2 = input2 == 0 ? new FalseLogicGate() : new TrueLogicGate();
+        ILogicGate newInput1 = input1 == 0 ? _falseLogicGate : _trueLogicGate;
+        ILogicGate newInput2 = input2 == 0 ? _falseLogicGate : _trueLogicGate;
         _orLogicGate.AddInput(newInput1);
         _orLogicGate.AddInput(newInput2);
 
@@ -109,9 +110,9 @@ public class OrLogicGateTests
         int expectedResult
     )
     {
-        ILogicGate newInput1 = input1 == 0 ? new FalseLogicGate() : new TrueLogicGate();
-        ILogicGate newInput2 = input2 == 0 ? new FalseLogicGate() : new TrueLogicGate();
-        ILogicGate newInput3 = input3 == 0 ? new FalseLogicGate() : new TrueLogicGate();
+        ILogicGate newInput1 = input1 == 0 ? _falseLogicGate : _trueLogicGate;
+        ILogicGate newInput2 = input2 == 0 ? _falseLogicGate : _trueLogicGate;
+        ILogicGate newInput3 = input3 == 0 ? _falseLogicGate : _trueLogicGate;
         _orLogicGate.AddInput(newInput1);
         _orLogicGate.AddInput(newInput2);
         _orLogicGate.AddInput(newInput3);
